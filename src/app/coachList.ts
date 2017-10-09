@@ -3,26 +3,52 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/merge';
 import 'rxjs/add/operator/map';
 import { TeamMember } from './team-member';
-import { MatSort } from '@angular/material';
+import { MatSort, MatPaginator } from '@angular/material';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 export class CoachList extends DataSource<TeamMember> {
-  constructor(private data: TeamMember[], private _sort: MatSort) {
+  _filterChange = new BehaviorSubject('');
+  get filter(): string { return this._filterChange.value; }
+  set filter(filter: string) { this._filterChange.next(filter)};
+
+  filterData: TeamMember[] = [];
+  renderedData: TeamMember[] = [];
+  constructor(private data: TeamMember[], private _sort: MatSort, private _paginator: MatPaginator) {
     super();
+
+    this._filterChange.subscribe(() => this._paginator.pageIndex = 0);
   }
   connect(): Observable<TeamMember[]> {
     const displayDataChanges = [
       this.data,
-      this._sort.sortChange
+      this._sort.sortChange,
+      this._filterChange,
+      this._paginator.page
     ];
     return Observable.merge(...displayDataChanges).map(() => {
-      return this.getSortedData();
+      this.filterData = this.data.slice().filter((item: TeamMember) => {
+        const searchStr = (item.LastName +
+          item.FirstName +
+          item.Title +
+          item.PositionCategory +
+          item.Location +
+          item.BusinessUnit +
+          item.CoachLastFirstName)
+        .toLowerCase();
+        return searchStr.indexOf(this.filter.toLowerCase()) !== -1;
+      });
+
+      const sortedData = this.getSortedData(this.filterData.slice());
+
+      const startIndex = this._paginator.pageIndex * this._paginator.pageSize;
+      this.renderedData = sortedData.splice(startIndex, this._paginator.pageSize);
+      return this.renderedData;
     });
   }
 
   disconnect() {}
 
-  getSortedData(): TeamMember[] {
-    const data = this.data.slice();
+  getSortedData(data: TeamMember[]): TeamMember[] {
     if (!this._sort.active || this._sort.direction === '') { return data; }
 
     return data.sort((a, b) => {
