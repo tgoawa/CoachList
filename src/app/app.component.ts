@@ -1,5 +1,6 @@
 import { Component, ViewChild, OnInit } from '@angular/core';
 import { DataSource } from '@angular/cdk/collections';
+import { MatSort } from '@angular/material';
 import { TeamMemberService } from './team-member.service';
 import { TeamMember } from './team-member';
 import { CoachList } from './coachList';
@@ -14,6 +15,8 @@ export class AppComponent implements OnInit {
   activeTeamMembers: TeamMember[];
   coachList: TeamMember[] = [];
   dataSource: CoachList;
+
+  @ViewChild(MatSort) sort: MatSort;
   constructor(private tmService: TeamMemberService) { }
 
   ngOnInit() {
@@ -25,7 +28,7 @@ export class AppComponent implements OnInit {
       .subscribe(data => {
         this.activeTeamMembers = data;
         this.mapCoachToTeamMember(this.activeTeamMembers);
-        this.dataSource = new CoachList(this.coachList);
+        this.dataSource = new CoachList(this.coachList, this.sort);
         console.log(this.dataSource);
       }, error => {
         console.error(error);
@@ -37,8 +40,7 @@ export class AppComponent implements OnInit {
       const currentTeamMember: TeamMember = data[x];
       for (let y = 0; y < data.length; y++) {
         if (data[y].TeamMemberId === currentTeamMember.CoachId) {
-          currentTeamMember.CoachFirstName = data[y].FirstName;
-          currentTeamMember.CoachLastName = data[y].LastName;
+          currentTeamMember.CoachLastFirstName = data[y].LastFirstName;
           this.coachList.push(currentTeamMember);
         }
       }
