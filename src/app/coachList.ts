@@ -9,7 +9,7 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 export class CoachList extends DataSource<TeamMember> {
   _filterChange = new BehaviorSubject('');
   get filter(): string { return this._filterChange.value; }
-  set filter(filter: string) { this._filterChange.next(filter)};
+  set filter(filter: string) { this._filterChange.next(filter); }
 
   filterData: TeamMember[] = [];
   renderedData: TeamMember[] = [];
