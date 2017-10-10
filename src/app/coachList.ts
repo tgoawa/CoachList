@@ -29,8 +29,8 @@ export class CoachList extends DataSource<TeamMember> {
       this.filterData = this.data.slice().filter((item: TeamMember) => {
         const searchStr = (item.LastName +
           item.FirstName +
-          item.Title +
-          item.PositionCategory +
+          item.JobCodeDescription +
+          item.JobCategory +
           item.Location +
           item.BusinessUnit +
           item.CoachLastFirstName)
