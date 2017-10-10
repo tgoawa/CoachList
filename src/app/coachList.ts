@@ -58,8 +58,8 @@ export class CoachList extends DataSource<TeamMember> {
       switch (this._sort.active) {
         case 'lastName': [propertyA, propertyB] = [a.LastName, b.LastName]; break;
         case 'firstName': [propertyA, propertyB] = [a.FirstName, b.FirstName]; break;
-        case 'title': [propertyA, propertyB] = [a.Title, b.Title]; break;
-        case 'category': [propertyA, propertyB] = [a.PositionCategory, b.PositionCategory]; break;
+        case 'title': [propertyA, propertyB] = [a.JobCodeDescription, b.JobCodeDescription]; break;
+        case 'category': [propertyA, propertyB] = [a.JobCategory, b.JobCategory]; break;
         case 'location': [propertyA, propertyB] = [a.Location, b.Location]; break;
         case 'businessUnit': [propertyA, propertyB] = [a.BusinessUnit, b.BusinessUnit]; break;
         case 'coach': [propertyA, propertyB] = [a.CoachLastFirstName, b.CoachLastFirstName]; break;
