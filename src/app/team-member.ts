@@ -3,8 +3,8 @@ export class TeamMember {
   LastName: string;
   FirstName: string;
   LastFirstName: string;
-  Title: string;
-  PositionCategory: string;
+  JobCodeDescription: string;
+  JobCategory: string;
   Location: string;
   BusinessUnit: string;
   CoachId: number;

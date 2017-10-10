@@ -25,12 +25,12 @@
 
       <ng-container matColumnDef="title">
         <mat-header-cell *matHeaderCellDef mat-sort-header> Title </mat-header-cell>
-        <mat-cell *matCellDef="let teamMember"> {{teamMember.Title}} </mat-cell>
+        <mat-cell *matCellDef="let teamMember"> {{teamMember.JobCodeDescription}} </mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="category">
         <mat-header-cell *matHeaderCellDef mat-sort-header> Position Category </mat-header-cell>
-        <mat-cell *matCellDef="let teamMember"> {{teamMember.PositionCategory}} </mat-cell>
+        <mat-cell *matCellDef="let teamMember"> {{teamMember.JobCategory}} </mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="location">
