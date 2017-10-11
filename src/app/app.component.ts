@@ -45,12 +45,21 @@ export class AppComponent implements OnInit {
   }
 
   private mapCoachToTeamMember(data: TeamMember[]) {
+    let isfound = false;
     for (let x = 0; x < data.length; x++) {
+      isfound = false;
       const currentTeamMember: TeamMember = data[x];
       for (let y = 0; y < data.length; y++) {
         if (data[y].TeamMemberId === currentTeamMember.CoachId) {
+          isfound = true;
           currentTeamMember.CoachLastFirstName = data[y].LastFirstName;
           this.coachList.push(currentTeamMember);
+          break;
+        }
+        if (!isfound) {
+          currentTeamMember.CoachLastFirstName = '';
+          this.coachList.push(currentTeamMember);
+          break;
         }
       }
     }
