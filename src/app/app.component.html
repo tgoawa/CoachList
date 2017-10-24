@@ -1,64 +1,67 @@
-<mat-card>
+<mat-toolbar class="bg-transparent">
   <img src="../assets/images/schenck-logo.png">
+</mat-toolbar>
+
+<mat-card>
   <mat-card-title>
     Coach List
   </mat-card-title>
 
-    <mat-card-content>
-      <div class="list-header">
-        <mat-form-field floatPlaceholder="never">
-          <input matInput #filter placeholder="Filter list">
-          <mat-hint>Enter a term to filter by</mat-hint>
-        </mat-form-field>
-      </div>
+  <mat-card-content>
+    <div class="list-header">
+      <mat-form-field floatPlaceholder="never">
+        <input matInput #filter placeholder="Filter list">
+        <mat-hint>Enter a term to filter by</mat-hint>
+      </mat-form-field>
+    </div>
 
-      <mat-table #table [dataSource]="dataSource" matSort>
+    <mat-table #table [dataSource]="dataSource" matSort>
 
-        <ng-container matColumnDef="lastName">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> Last Name </mat-header-cell>
-          <mat-cell *matCellDef="let teamMember"> {{teamMember.LastName}} </mat-cell>
-        </ng-container>
+      <ng-container matColumnDef="lastName">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Last Name </mat-header-cell>
+        <mat-cell *matCellDef="let teamMember"> {{teamMember.LastName}} </mat-cell>
+      </ng-container>
 
-        <ng-container matColumnDef="firstName">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> FirstName </mat-header-cell>
-          <mat-cell *matCellDef="let teamMember"> {{teamMember.FirstName}} </mat-cell>
-        </ng-container>
+      <ng-container matColumnDef="firstName">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> FirstName </mat-header-cell>
+        <mat-cell *matCellDef="let teamMember"> {{teamMember.FirstName}} </mat-cell>
+      </ng-container>
 
-        <ng-container matColumnDef="title">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> Title </mat-header-cell>
-          <mat-cell *matCellDef="let teamMember"> {{teamMember.JobCodeDescription}} </mat-cell>
-        </ng-container>
+      <ng-container matColumnDef="title">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Title </mat-header-cell>
+        <mat-cell *matCellDef="let teamMember"> {{teamMember.JobCodeDescription}} </mat-cell>
+      </ng-container>
 
-        <ng-container matColumnDef="category">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> Position Category </mat-header-cell>
-          <mat-cell *matCellDef="let teamMember"> {{teamMember.JobCategory}} </mat-cell>
-        </ng-container>
+      <ng-container matColumnDef="category">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Position Category </mat-header-cell>
+        <mat-cell *matCellDef="let teamMember"> {{teamMember.JobCategory}} </mat-cell>
+      </ng-container>
 
-        <ng-container matColumnDef="location">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> Location </mat-header-cell>
-          <mat-cell *matCellDef="let teamMember"> {{teamMember.Location}} </mat-cell>
-        </ng-container>
+      <ng-container matColumnDef="location">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Location </mat-header-cell>
+        <mat-cell *matCellDef="let teamMember"> {{teamMember.Location}} </mat-cell>
+      </ng-container>
 
-        <ng-container matColumnDef="businessUnit">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> Business Unit </mat-header-cell>
-          <mat-cell *matCellDef="let teamMember"> {{teamMember.BusinessUnit}} </mat-cell>
-        </ng-container>
+      <ng-container matColumnDef="businessUnit">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Business Unit </mat-header-cell>
+        <mat-cell *matCellDef="let teamMember"> {{teamMember.BusinessUnit}} </mat-cell>
+      </ng-container>
 
-        <ng-container matColumnDef="coach">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> Coach </mat-header-cell>
-          <mat-cell *matCellDef="let teamMember"> {{teamMember.CoachLastFirstName}}</mat-cell>
-        </ng-container>
+      <ng-container matColumnDef="coach">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Coach </mat-header-cell>
+        <mat-cell *matCellDef="let teamMember"> {{teamMember.CoachLastFirstName}}</mat-cell>
+      </ng-container>
 
-        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
-      </mat-table>
-    </mat-card-content>
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    </mat-table>
+  </mat-card-content>
 
-    <mat-card-footer>
+  <mat-card-footer>
 
-      <mat-paginator #paginator [length]="coachList.length" [pageIndex]="0" [pageSize]="25" [pageSizeOptions]="[5, 10, 25, 100]">
-      </mat-paginator>
+    <mat-paginator #paginator [length]="coachList.length" [pageIndex]="0" [pageSize]="25" [pageSizeOptions]="[5, 10, 25, 100]">
+    </mat-paginator>
 
-    </mat-card-footer>
+  </mat-card-footer>
 
 </mat-card>

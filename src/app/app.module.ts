@@ -8,7 +8,8 @@ import { MatTableModule,
   MatPaginatorModule,
   MatProgressSpinnerModule,
   MatInputModule,
-  MatCardModule } from '@angular/material';
+  MatCardModule,
+  MatToolbarModule } from '@angular/material';
 
 import { AppComponent } from './app.component';
 import { TeamMemberService } from './team-member.service';
@@ -26,7 +27,8 @@ import { TeamMemberService } from './team-member.service';
     MatPaginatorModule,
     MatProgressSpinnerModule,
     MatTableModule,
-    MatSortModule
+    MatSortModule,
+    MatToolbarModule
   ],
   providers: [TeamMemberService],
   bootstrap: [AppComponent]
