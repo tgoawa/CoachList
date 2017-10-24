@@ -3,7 +3,6 @@
   <mat-card-title>
     Coach List
   </mat-card-title>
-  <ng-container *ngIf="activeTeamMembers.length > 1; else isLoading">
 
     <mat-card-content>
       <div class="list-header">
@@ -61,11 +60,5 @@
       </mat-paginator>
 
     </mat-card-footer>
-  </ng-container>
 
-  <ng-template #isLoading>
-    <div class="center">
-      <mat-spinner></mat-spinner>
-    </div>
-  </ng-template>
 </mat-card>
