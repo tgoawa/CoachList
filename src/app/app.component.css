@@ -7,3 +7,7 @@
 .bg-transparent {
   background-color: transparent;
 }
+
+.list-header {
+  margin-bottom: 10px;
+}
