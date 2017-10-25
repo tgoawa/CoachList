@@ -3,3 +3,9 @@
 @import '~https://fonts.googleapis.com/css?family=Roboto:300,400,500';
 
 @import '~https://fonts.googleapis.com/icon?family=Material+Icons';
+
+.center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
