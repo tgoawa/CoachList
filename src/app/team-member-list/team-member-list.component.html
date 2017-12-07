@@ -39,7 +39,7 @@
 
   <ng-container matColumnDef="coach">
     <mat-header-cell *matHeaderCellDef mat-sort-header> Coach </mat-header-cell>
-    <mat-cell *matCellDef="let teamMember"> {{teamMember.CoachLastFirstName}}</mat-cell>
+    <mat-cell *matCellDef="let teamMember"> <span *ngIf="teamMember.CoachLastName !== null">{{teamMember.CoachLastName}}, {{teamMember.CoachFirstName}}</span></mat-cell>
   </ng-container>
 
   <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
