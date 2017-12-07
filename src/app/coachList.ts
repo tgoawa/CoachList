@@ -33,7 +33,8 @@ export class CoachList extends DataSource<TeamMember> {
           item.JobCategory +
           item.Location +
           item.BusinessUnit +
-          item.CoachLastFirstName)
+          item.CoachLastName +
+          item.CoachFirstName)
         .toLowerCase();
         return searchStr.indexOf(this.filter.toLowerCase()) !== -1;
       });
@@ -62,7 +63,7 @@ export class CoachList extends DataSource<TeamMember> {
         case 'category': [propertyA, propertyB] = [a.JobCategory, b.JobCategory]; break;
         case 'location': [propertyA, propertyB] = [a.Location, b.Location]; break;
         case 'businessUnit': [propertyA, propertyB] = [a.BusinessUnit, b.BusinessUnit]; break;
-        case 'coach': [propertyA, propertyB] = [a.CoachLastFirstName, b.CoachLastFirstName]; break;
+        case 'coach': [propertyA, propertyB] = [a.CoachLastName, b.CoachLastName]; break;
       }
 
       const valueA = isNaN(+propertyA) ? propertyA : +propertyA;

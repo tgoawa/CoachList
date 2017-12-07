@@ -8,5 +8,6 @@ export class TeamMember {
   Location: string;
   BusinessUnit: string;
   CoachId: number;
-  CoachLastFirstName: string;
+  CoachLastName: string;
+  CoachFirstName: string;
 }

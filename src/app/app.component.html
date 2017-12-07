@@ -9,7 +9,7 @@
 
   <mat-card-content>
     <ng-container *ngIf="activeTeamMembers; else isLoading">
-      <app-team-member-list [coachList]="coachList"></app-team-member-list>
+      <app-team-member-list [coachList]="activeTeamMembers"></app-team-member-list>
     </ng-container>
     <ng-template #isLoading>
       <div class="center">
