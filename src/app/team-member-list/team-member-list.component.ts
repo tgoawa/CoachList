@@ -34,6 +34,7 @@ export class TeamMemberListComponent implements OnInit {
 
   exportToCSV() {
     console.log(this.exportData.value);
+    // tslint:disable-next-line:no-unused-expression
     new Angular2Csv(this.exportData.value, 'Coach List');
   }
 
