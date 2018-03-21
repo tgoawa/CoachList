@@ -5,6 +5,8 @@
   </mat-form-field>
 </div>
 
+<button (click)="exportToCSV()">Export to CSV</button>
+
 <mat-table #table [dataSource]="dataSource" matSort>
 
   <ng-container matColumnDef="lastName">
