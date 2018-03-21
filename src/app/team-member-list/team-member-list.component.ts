@@ -8,6 +8,7 @@ import 'rxjs/add/operator/distinctUntilChanged';
 import { CoachList } from '../coachList';
 import { TeamMember, ExportData } from '../team-member';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { Angular2Csv } from 'angular2-csv/Angular2-csv';
 
 @Component({
   selector: 'app-team-member-list',
@@ -28,10 +29,12 @@ export class TeamMemberListComponent implements OnInit {
 
   ngOnInit() {
     this.setTable();
+    this.exportData.next(this.setExportData(this.coachList));
   }
 
   exportToCSV() {
     console.log(this.exportData.value);
+    new Angular2Csv(this.exportData.value, 'Coach List');
   }
 
   private setTable() {
@@ -43,7 +46,6 @@ export class TeamMemberListComponent implements OnInit {
         if (!this.dataSource) { return; }
         this.dataSource.filter = this.filter.nativeElement.value;
         this.exportData.next(this.setExportData(this.dataSource.renderedData));
-        console.log(this.exportData);
       });
   }
 

@@ -9,7 +9,8 @@ import { MatTableModule,
   MatProgressSpinnerModule,
   MatInputModule,
   MatCardModule,
-  MatToolbarModule } from '@angular/material';
+  MatToolbarModule,
+  MatButtonModule} from '@angular/material';
 
 import { AppComponent } from './app.component';
 import { TeamMemberService } from './team-member.service';
@@ -24,6 +25,7 @@ import { TeamMemberListComponent } from './team-member-list/team-member-list.com
     BrowserModule,
     BrowserAnimationsModule,
     HttpModule,
+    MatButtonModule,
     MatCardModule,
     MatInputModule,
     MatPaginatorModule,
