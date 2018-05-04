@@ -33,9 +33,17 @@ export class TeamMemberListComponent implements OnInit {
   }
 
   exportToCSV() {
-    console.log(this.exportData.value);
+    const head = ['Last Name',
+    'First Name',
+    'Title',
+    'Position Category',
+    'Location',
+    'Business Unit',
+    'Coach Last Name',
+    'Coach First Name'];
+
     // tslint:disable-next-line:no-unused-expression
-    new Angular2Csv(this.exportData.value, 'Coach List');
+    new Angular2Csv(this.exportData.value, 'Coach List', {headers: (head)});
   }
 
   private setTable() {
