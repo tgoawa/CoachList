@@ -5,7 +5,7 @@
   </mat-form-field>
 </div>
 
-<button color="primary" mat-raised-button (click)="exportToCSV()">Export entire list to CSV</button>
+<!-- <button color="primary" mat-raised-button (click)="exportToCSV()">Export entire list to CSV</button> -->
 
 <mat-table #table [dataSource]="dataSource" matSort>
 
@@ -48,5 +48,5 @@
   <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
 </mat-table>
 
-<mat-paginator #paginator [length]="coachList.length" [pageIndex]="0" [pageSize]="25" [pageSizeOptions]="[5, 10, 25, 100, 150]">
+<mat-paginator #paginator [length]="dataSource.length" [pageIndex]="0" [pageSize]="25" [pageSizeOptions]="[5, 10, 25, 100, 150]" showFirstLastButtons>
 </mat-paginator>
