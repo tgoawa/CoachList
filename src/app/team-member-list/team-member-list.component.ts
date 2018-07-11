@@ -22,7 +22,18 @@ export class TeamMemberListComponent implements AfterViewInit {
     this.dataSource.data = this.coachList;
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
+    this.dataSource.filterPredicate =
+    function (data: TeamMember, filter: string): boolean {
+      return data.BusinessUnit.toLocaleLowerCase().includes(filter);
+    };
     this.cd.detectChanges();
+  }
+
+  filterBusinessUnit(filterValue: string) {
+
+    filterValue = filterValue.trim();
+    filterValue = filterValue.toLocaleLowerCase();
+    this.dataSource.filter = filterValue;
   }
 
   // exportToCSV() {

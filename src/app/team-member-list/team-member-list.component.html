@@ -1,6 +1,6 @@
 <div class="list-header">
   <mat-form-field floatPlaceholder="never">
-    <input matInput #filter placeholder="Filter list">
+    <input matInput #filter (keyup)="filterBusinessUnit($event.target.value)" placeholder="Filter by Business Unit">
     <mat-hint>Enter a term to filter by</mat-hint>
   </mat-form-field>
 </div>
