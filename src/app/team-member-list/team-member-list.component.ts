@@ -2,7 +2,6 @@ import { Component, Input, OnInit, ViewChild, AfterViewInit, ChangeDetectionStra
 import { TeamMember, ExportData } from '../team-member';
 import { MatPaginator, MatTableDataSource, MatSort } from '@angular/material';
 import { Angular2Csv } from 'angular2-csv/Angular2-csv';
-import { CoachList } from '../coachList';
 
 @Component({
   selector: 'app-team-member-list',
@@ -17,6 +16,7 @@ export class TeamMemberListComponent implements AfterViewInit {
   displayedColumns = ['LastName', 'FirstName', 'JobCodeDescription', 'JobCategory', 'Location', 'BusinessUnit', 'CoachLastName'];
   dataSource = new MatTableDataSource();
   filterByBusinessUnit: boolean;
+  // exportData: ExportData[];
   constructor(private cd: ChangeDetectorRef) { }
 
   ngAfterViewInit() {
@@ -61,8 +61,8 @@ export class TeamMemberListComponent implements AfterViewInit {
       };
     }
   }
-
   // exportToCSV() {
+  //   this.exportData = this.setExportData(this.dataSource.filteredData);
   //   const head = ['Last Name',
   //   'First Name',
   //   'Title',
@@ -73,7 +73,28 @@ export class TeamMemberListComponent implements AfterViewInit {
   //   'Coach First Name'];
 
   //   // tslint:disable-next-line:no-unused-expression
-  //   new Angular2Csv(this.exportData.value, 'Coach List', {headers: (head)});
+  //   new Angular2Csv(this.exportData, 'Coach List', {headers: (head)});
+  // }
+
+
+  // private setExportData(teamMemberList: TeamMember[]) {
+  //   const data = [];
+
+  //   for (let x = 0; x < teamMemberList.length; x++) {
+  //     const teamMember = new ExportData();
+  //     teamMember.LastName = teamMemberList[x].LastName;
+  //     teamMember.FirstName = teamMemberList[x].FirstName;
+  //     teamMember.Title = teamMemberList[x].JobCodeDescription;
+  //     teamMember.PositionCategory = teamMemberList[x].JobCategory;
+  //     teamMember.Location = teamMemberList[x].Location;
+  //     teamMember.BusinessUnit = teamMemberList[x].BusinessUnit;
+  //     teamMember.CoachLastName = teamMemberList[x].CoachLastName;
+  //     teamMember.CoachFirstName = teamMemberList[x].CoachFirstName;
+
+  //     data.push(teamMember);
+  //   }
+
+  //   return data;
   // }
 
 }
