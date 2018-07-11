@@ -9,6 +9,7 @@ import { MatTableModule,
   MatProgressSpinnerModule,
   MatInputModule,
   MatCardModule,
+  MatRadioModule,
   MatToolbarModule,
   MatButtonModule} from '@angular/material';
 
@@ -30,6 +31,7 @@ import { TeamMemberListComponent } from './team-member-list/team-member-list.com
     MatInputModule,
     MatPaginatorModule,
     MatProgressSpinnerModule,
+    MatRadioModule,
     MatTableModule,
     MatSortModule,
     MatToolbarModule

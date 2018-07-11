@@ -1,6 +1,16 @@
 <div class="list-header">
-  <mat-form-field floatPlaceholder="never">
-    <input matInput #filter (keyup)="filterBusinessUnit($event.target.value)" placeholder="Filter by Business Unit">
+  <p>
+    <mat-radio-group>
+      <mat-radio-button value="1" (click)="setFilterByBusinessUnit()" [checked]="filterByBusinessUnit">Filter by Business Unit</mat-radio-button>
+      <mat-radio-button value="2" (click)="setFilterByLocation()">Filter by Location</mat-radio-button>
+    </mat-radio-group>
+  </p>
+  <mat-form-field *ngIf="filterByBusinessUnit">
+    <input matInput #filter (keyup)="customFilter($event.target.value)" placeholder="Filter by Business Unit">
+    <mat-hint>Enter a term to filter by</mat-hint>
+  </mat-form-field>
+  <mat-form-field *ngIf="!filterByBusinessUnit">
+    <input matInput #filter (keyup)="customFilter($event.target.value)" placeholder="Filter by Location">
     <mat-hint>Enter a term to filter by</mat-hint>
   </mat-form-field>
 </div>
@@ -41,12 +51,15 @@
 
   <ng-container matColumnDef="CoachLastName">
     <mat-header-cell *matHeaderCellDef mat-sort-header> Coach </mat-header-cell>
-    <mat-cell *matCellDef="let teamMember"> <span *ngIf="teamMember.CoachLastName !== null">{{teamMember.CoachLastName}}, {{teamMember.CoachFirstName}}</span></mat-cell>
+    <mat-cell *matCellDef="let teamMember">
+      <span *ngIf="teamMember.CoachLastName !== null">{{teamMember.CoachLastName}}, {{teamMember.CoachFirstName}}</span>
+    </mat-cell>
   </ng-container>
 
   <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
   <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
 </mat-table>
 
-<mat-paginator #paginator [length]="dataSource.data.length" [pageIndex]="0" [pageSize]="25" [pageSizeOptions]="[5, 10, 25, 100, 150]" showFirstLastButtons>
+<mat-paginator #paginator [length]="dataSource.data.length" [pageIndex]="0" [pageSize]="25" [pageSizeOptions]="[5, 10, 25, 100, 150]"
+  showFirstLastButtons>
 </mat-paginator>

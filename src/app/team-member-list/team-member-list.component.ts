@@ -16,24 +16,50 @@ export class TeamMemberListComponent implements AfterViewInit {
   @ViewChild(MatSort) sort: MatSort;
   displayedColumns = ['LastName', 'FirstName', 'JobCodeDescription', 'JobCategory', 'Location', 'BusinessUnit', 'CoachLastName'];
   dataSource = new MatTableDataSource();
+  filterByBusinessUnit: boolean;
   constructor(private cd: ChangeDetectorRef) { }
 
   ngAfterViewInit() {
+    this.filterByBusinessUnit = true;
     this.dataSource.data = this.coachList;
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
-    this.dataSource.filterPredicate =
-    function (data: TeamMember, filter: string): boolean {
-      return data.BusinessUnit.toLocaleLowerCase().includes(filter);
-    };
+    this.setFilterPredicate(this.filterByBusinessUnit);
     this.cd.detectChanges();
   }
 
-  filterBusinessUnit(filterValue: string) {
+  customFilter(filterValue: string) {
+      filterValue = filterValue.trim();
+      filterValue = filterValue.toLowerCase();
+      this.dataSource.filter = filterValue;
+  }
 
-    filterValue = filterValue.trim();
-    filterValue = filterValue.toLocaleLowerCase();
-    this.dataSource.filter = filterValue;
+  setFilterByBusinessUnit() {
+    this.filterByBusinessUnit = true;
+    this.setFilterPredicate(this.filterByBusinessUnit);
+  }
+
+  setFilterByLocation() {
+    this.filterByBusinessUnit = false;
+    this.setFilterPredicate(this.filterByBusinessUnit);
+  }
+
+  private setFilterPredicate(isBusinessFilter: boolean) {
+    if (isBusinessFilter) {
+      this.dataSource.filterPredicate =
+      function (data: TeamMember, filter: string): boolean {
+        if (data.BusinessUnit) {
+          return data.BusinessUnit.toLowerCase().includes(filter);
+        }
+      };
+    } else {
+      this.dataSource.filterPredicate =
+      function (data: TeamMember, filter: string): boolean {
+        if (data.Location) {
+          return data.Location.toLowerCase().includes(filter);
+        }
+      };
+    }
   }
 
   // exportToCSV() {
