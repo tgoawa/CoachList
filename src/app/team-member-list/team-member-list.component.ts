@@ -1,38 +1,68 @@
-import { Component, Input, OnInit, ViewChild, ElementRef } from '@angular/core';
-import { SelectionModel } from '@angular/cdk/collections';
-import { MatSort, MatPaginator } from '@angular/material';
-import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/observable/fromEvent';
-import 'rxjs/add/operator/debounceTime';
-import 'rxjs/add/operator/distinctUntilChanged';
-import { CoachList } from '../coachList';
+import { Component, Input, OnInit, ViewChild, AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { TeamMember, ExportData } from '../team-member';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { MatPaginator, MatTableDataSource, MatSort } from '@angular/material';
 import { Angular2Csv } from 'angular2-csv/Angular2-csv';
 
 @Component({
   selector: 'app-team-member-list',
   templateUrl: './team-member-list.component.html',
-  styleUrls: ['./team-member-list.component.css']
+  styleUrls: ['./team-member-list.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class TeamMemberListComponent implements OnInit {
+export class TeamMemberListComponent implements AfterViewInit {
   @Input() coachList: TeamMember[];
-  displayedColumns = ['lastName', 'firstName', 'title', 'category', 'location', 'businessUnit', 'coach'];
-  selection = new SelectionModel<string>(true, []);
-  dataSource: CoachList;
-  exportData: BehaviorSubject<ExportData[]> = new BehaviorSubject<ExportData[]>([]);
-
-  @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
-  @ViewChild('filter') filter: ElementRef;
-  constructor() { }
+  @ViewChild(MatSort) sort: MatSort;
+  displayedColumns = ['LastName', 'FirstName', 'JobCodeDescription', 'JobCategory', 'Location', 'BusinessUnit', 'CoachLastName'];
+  dataSource = new MatTableDataSource();
+  filterByBusinessUnit: boolean;
+  exportData: TeamMember[];
+  constructor(private cd: ChangeDetectorRef) { }
 
-  ngOnInit() {
-    this.setTable();
-    this.exportData.next(this.setExportData(this.coachList));
+  ngAfterViewInit() {
+    this.filterByBusinessUnit = true;
+    this.dataSource.data = this.coachList;
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
+    this.setFilterPredicate(this.filterByBusinessUnit);
+    this.cd.detectChanges();
   }
 
+  customFilter(filterValue: string) {
+      filterValue = filterValue.trim();
+      filterValue = filterValue.toLowerCase();
+      this.dataSource.filter = filterValue;
+  }
+
+  setFilterByBusinessUnit() {
+    this.filterByBusinessUnit = true;
+    this.setFilterPredicate(this.filterByBusinessUnit);
+  }
+
+  setFilterByLocation() {
+    this.filterByBusinessUnit = false;
+    this.setFilterPredicate(this.filterByBusinessUnit);
+  }
+
+  private setFilterPredicate(isBusinessFilter: boolean) {
+    if (isBusinessFilter) {
+      this.dataSource.filterPredicate =
+      function (data: TeamMember, filter: string): boolean {
+        if (data.BusinessUnit) {
+          return data.BusinessUnit.toLowerCase().includes(filter);
+        }
+      };
+    } else {
+      this.dataSource.filterPredicate =
+      function (data: TeamMember, filter: string): boolean {
+        if (data.Location) {
+          return data.Location.toLowerCase().includes(filter);
+        }
+      };
+    }
+  }
   exportToCSV() {
+    this.exportData = this.setExportData(this.coachList);
     const head = ['Last Name',
     'First Name',
     'Title',
@@ -43,20 +73,9 @@ export class TeamMemberListComponent implements OnInit {
     'Coach First Name'];
 
     // tslint:disable-next-line:no-unused-expression
-    new Angular2Csv(this.exportData.value, 'Coach List', {headers: (head)});
+    new Angular2Csv(this.exportData, 'Coach List', {headers: (head)});
   }
 
-  private setTable() {
-    this.dataSource = new CoachList(this.coachList, this.sort, this.paginator);
-    Observable.fromEvent(this.filter.nativeElement, 'keyup')
-      .debounceTime(150)
-      .distinctUntilChanged()
-      .subscribe(() => {
-        if (!this.dataSource) { return; }
-        this.dataSource.filter = this.filter.nativeElement.value;
-        this.exportData.next(this.setExportData(this.dataSource.renderedData));
-      });
-  }
 
   private setExportData(teamMemberList: TeamMember[]) {
     const data = [];
