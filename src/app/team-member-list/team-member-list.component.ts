@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, ViewChild, AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
+import { Component, Input, OnInit, ViewChild, AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, ElementRef } from '@angular/core';
 import { TeamMember, ExportData } from '../team-member';
 import { MatPaginator, MatTableDataSource, MatSort } from '@angular/material';
 import { Angular2Csv } from 'angular2-csv/Angular2-csv';
@@ -13,8 +13,10 @@ export class TeamMemberListComponent implements AfterViewInit {
   @Input() coachList: TeamMember[];
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
+  @ViewChild('filter') filter: ElementRef;
   displayedColumns = ['LastName', 'FirstName', 'JobCodeDescription', 'JobCategory', 'Location', 'BusinessUnit', 'CoachLastName'];
   dataSource = new MatTableDataSource();
+  filterValue: string;
   filterByBusinessUnit: boolean;
   exportData: TeamMember[];
   constructor(private cd: ChangeDetectorRef) { }
@@ -28,10 +30,15 @@ export class TeamMemberListComponent implements AfterViewInit {
     this.cd.detectChanges();
   }
 
-  customFilter(filterValue: string) {
-      filterValue = filterValue.trim();
-      filterValue = filterValue.toLowerCase();
-      this.dataSource.filter = filterValue;
+  customFilter() {
+      this.filterValue = this.filterValue.trim();
+      this.filterValue = this.filterValue.toLowerCase();
+      this.dataSource.filter = this.filterValue;
+  }
+
+  clearFilter() {
+    this.filterValue = '';
+    this.customFilter();
   }
 
   setFilterByBusinessUnit() {

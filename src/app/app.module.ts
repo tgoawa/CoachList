@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { NgModule } from '@angular/core';
 
@@ -8,6 +9,7 @@ import { MatTableModule,
   MatPaginatorModule,
   MatProgressSpinnerModule,
   MatInputModule,
+  MatIconModule,
   MatCardModule,
   MatRadioModule,
   MatToolbarModule,
@@ -25,9 +27,11 @@ import { TeamMemberListComponent } from './team-member-list/team-member-list.com
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
+    FormsModule,
     HttpModule,
     MatButtonModule,
     MatCardModule,
+    MatIconModule,
     MatInputModule,
     MatPaginatorModule,
     MatProgressSpinnerModule,
