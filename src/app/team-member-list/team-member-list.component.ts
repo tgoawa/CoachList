@@ -16,7 +16,7 @@ export class TeamMemberListComponent implements AfterViewInit {
   displayedColumns = ['LastName', 'FirstName', 'JobCodeDescription', 'JobCategory', 'Location', 'BusinessUnit', 'CoachLastName'];
   dataSource = new MatTableDataSource();
   filterByBusinessUnit: boolean;
-  // exportData: ExportData[];
+  exportData: TeamMember[];
   constructor(private cd: ChangeDetectorRef) { }
 
   ngAfterViewInit() {
@@ -61,40 +61,40 @@ export class TeamMemberListComponent implements AfterViewInit {
       };
     }
   }
-  // exportToCSV() {
-  //   this.exportData = this.setExportData(this.dataSource.filteredData);
-  //   const head = ['Last Name',
-  //   'First Name',
-  //   'Title',
-  //   'Position Category',
-  //   'Location',
-  //   'Business Unit',
-  //   'Coach Last Name',
-  //   'Coach First Name'];
+  exportToCSV() {
+    this.exportData = this.setExportData(this.coachList);
+    const head = ['Last Name',
+    'First Name',
+    'Title',
+    'Position Category',
+    'Location',
+    'Business Unit',
+    'Coach Last Name',
+    'Coach First Name'];
 
-  //   // tslint:disable-next-line:no-unused-expression
-  //   new Angular2Csv(this.exportData, 'Coach List', {headers: (head)});
-  // }
+    // tslint:disable-next-line:no-unused-expression
+    new Angular2Csv(this.exportData, 'Coach List', {headers: (head)});
+  }
 
 
-  // private setExportData(teamMemberList: TeamMember[]) {
-  //   const data = [];
+  private setExportData(teamMemberList: TeamMember[]) {
+    const data = [];
 
-  //   for (let x = 0; x < teamMemberList.length; x++) {
-  //     const teamMember = new ExportData();
-  //     teamMember.LastName = teamMemberList[x].LastName;
-  //     teamMember.FirstName = teamMemberList[x].FirstName;
-  //     teamMember.Title = teamMemberList[x].JobCodeDescription;
-  //     teamMember.PositionCategory = teamMemberList[x].JobCategory;
-  //     teamMember.Location = teamMemberList[x].Location;
-  //     teamMember.BusinessUnit = teamMemberList[x].BusinessUnit;
-  //     teamMember.CoachLastName = teamMemberList[x].CoachLastName;
-  //     teamMember.CoachFirstName = teamMemberList[x].CoachFirstName;
+    for (let x = 0; x < teamMemberList.length; x++) {
+      const teamMember = new ExportData();
+      teamMember.LastName = teamMemberList[x].LastName;
+      teamMember.FirstName = teamMemberList[x].FirstName;
+      teamMember.Title = teamMemberList[x].JobCodeDescription;
+      teamMember.PositionCategory = teamMemberList[x].JobCategory;
+      teamMember.Location = teamMemberList[x].Location;
+      teamMember.BusinessUnit = teamMemberList[x].BusinessUnit;
+      teamMember.CoachLastName = teamMemberList[x].CoachLastName;
+      teamMember.CoachFirstName = teamMemberList[x].CoachFirstName;
 
-  //     data.push(teamMember);
-  //   }
+      data.push(teamMember);
+    }
 
-  //   return data;
-  // }
+    return data;
+  }
 
 }
