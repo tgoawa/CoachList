@@ -1,19 +1,36 @@
 <div class="list-header">
   <p>
-    <mat-radio-group>
-      <mat-radio-button value="1" (click)="setFilterByBusinessUnit()" [checked]="filterByBusinessUnit">Filter by Business Unit</mat-radio-button>
-      <mat-radio-button value="2" (click)="setFilterByLocation()">Filter by Location</mat-radio-button>
-    </mat-radio-group>
+    <mat-form-field>
+      <mat-select placeholder="Filter by options" (valueChange)="setFilterPredicate($event)">
+        <mat-option *ngFor="let option of filterOptions" [value]="option.value">
+          {{option.viewValue}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
   </p>
-  <mat-form-field *ngIf="filterByBusinessUnit">
+  <mat-form-field *ngIf="filterBy == 0">
+    <input matInput #filter (keyup)="customFilter()" placeholder="Filter by Last Name" [(ngModel)]="filterValue">
+    <button *ngIf="filterValue" mat-icon-button color="warn" matTooltip="Clear Filter" matSuffix (click)="clearFilter()">
+      <mat-icon>close</mat-icon>
+    </button>
+    <mat-hint>Enter a term to filter by</mat-hint>
+  </mat-form-field>
+  <mat-form-field *ngIf="filterBy == 1">
+    <input matInput #filter (keyup)="customFilter()" placeholder="Filter by Location" [(ngModel)]="filterValue">
+    <button *ngIf="filterValue" mat-icon-button color="warn" matTooltip="Clear Filter" matSuffix (click)="clearFilter()">
+      <mat-icon>close</mat-icon>
+    </button>
+    <mat-hint>Enter a term to filter by</mat-hint>
+  </mat-form-field>
+  <mat-form-field *ngIf="filterBy == 2">
     <input matInput #filter (keyup)="customFilter()" placeholder="Filter by Business Unit" [(ngModel)]="filterValue">
     <button *ngIf="filterValue" mat-icon-button color="warn" matTooltip="Clear Filter" matSuffix (click)="clearFilter()">
       <mat-icon>close</mat-icon>
     </button>
     <mat-hint>Enter a term to filter by</mat-hint>
   </mat-form-field>
-  <mat-form-field *ngIf="!filterByBusinessUnit">
-    <input matInput #filter (keyup)="customFilter()" placeholder="Filter by Location" [(ngModel)]="filterValue">
+  <mat-form-field *ngIf="filterBy == 3">
+    <input matInput #filter (keyup)="customFilter()" placeholder="Filter by Coach Last Name" [(ngModel)]="filterValue">
     <button *ngIf="filterValue" mat-icon-button color="warn" matTooltip="Clear Filter" matSuffix (click)="clearFilter()">
       <mat-icon>close</mat-icon>
     </button>
@@ -66,6 +83,6 @@
   <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
 </mat-table>
 
-<mat-paginator #paginator [length]="dataSource.data.length" [pageIndex]="0" [pageSize]="25" [pageSizeOptions]="[5, 10, 25, 100, 150]"
+<mat-paginator #paginator [length]="dataSource.data.length" [pageIndex]="0" [pageSize]="25" [pageSizeOptions]="[5, 10, 25, 50, 100, 150]"
   showFirstLastButtons>
 </mat-paginator>

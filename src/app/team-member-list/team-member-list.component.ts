@@ -1,4 +1,13 @@
-import { Component, Input, OnInit, ViewChild, AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, ElementRef } from '@angular/core';
+import {
+  Component,
+  Input,
+  OnInit,
+  ViewChild,
+  AfterViewInit,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  ElementRef,
+} from '@angular/core';
 import { TeamMember, ExportData } from '../team-member';
 import { MatPaginator, MatTableDataSource, MatSort } from '@angular/material';
 import { Angular2Csv } from 'angular2-csv/Angular2-csv';
@@ -7,33 +16,47 @@ import { Angular2Csv } from 'angular2-csv/Angular2-csv';
   selector: 'app-team-member-list',
   templateUrl: './team-member-list.component.html',
   styleUrls: ['./team-member-list.component.css'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TeamMemberListComponent implements AfterViewInit {
   @Input() coachList: TeamMember[];
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild('filter') filter: ElementRef;
-  displayedColumns = ['LastName', 'FirstName', 'JobCodeDescription', 'JobCategory', 'Location', 'BusinessUnit', 'CoachLastName'];
+  displayedColumns = [
+    'LastName',
+    'FirstName',
+    'JobCodeDescription',
+    'JobCategory',
+    'Location',
+    'BusinessUnit',
+    'CoachLastName',
+  ];
+  filterOptions: any[] = [
+    { value: 0, viewValue: 'Last Name' },
+    { value: 1, viewValue: 'Location' },
+    { value: 2, viewValue: 'Business Unit' },
+    { value: 3, viewValue: 'Coach Last Name' },
+  ];
   dataSource = new MatTableDataSource();
   filterValue: string;
-  filterByBusinessUnit: boolean;
+  filterBy: number;
   exportData: TeamMember[];
-  constructor(private cd: ChangeDetectorRef) { }
+  constructor(private cd: ChangeDetectorRef) {}
 
   ngAfterViewInit() {
-    this.filterByBusinessUnit = true;
+    this.filterBy = 0;
     this.dataSource.data = this.coachList;
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
-    this.setFilterPredicate(this.filterByBusinessUnit);
+    this.setFilterPredicate(this.filterBy);
     this.cd.detectChanges();
   }
 
   customFilter() {
-      this.filterValue = this.filterValue.trim();
-      this.filterValue = this.filterValue.toLowerCase();
-      this.dataSource.filter = this.filterValue;
+    this.filterValue = this.filterValue.trim();
+    this.filterValue = this.filterValue.toLowerCase();
+    this.dataSource.filter = this.filterValue;
   }
 
   clearFilter() {
@@ -41,48 +64,87 @@ export class TeamMemberListComponent implements AfterViewInit {
     this.customFilter();
   }
 
-  setFilterByBusinessUnit() {
-    this.filterByBusinessUnit = true;
-    this.setFilterPredicate(this.filterByBusinessUnit);
-  }
-
-  setFilterByLocation() {
-    this.filterByBusinessUnit = false;
-    this.setFilterPredicate(this.filterByBusinessUnit);
-  }
-
-  private setFilterPredicate(isBusinessFilter: boolean) {
-    if (isBusinessFilter) {
-      this.dataSource.filterPredicate =
-      function (data: TeamMember, filter: string): boolean {
-        if (data.BusinessUnit) {
-          return data.BusinessUnit.toLowerCase().includes(filter);
-        }
-      };
-    } else {
-      this.dataSource.filterPredicate =
-      function (data: TeamMember, filter: string): boolean {
-        if (data.Location) {
-          return data.Location.toLowerCase().includes(filter);
-        }
-      };
+   setFilterPredicate(value: number) {
+    switch (value) {
+      case 0: {
+        this.filterBy = value;
+        this.dataSource.filterPredicate = function(
+          data: TeamMember,
+          filter: string
+        ): boolean {
+          if (data.LastName) {
+            return data.LastName.toLowerCase().includes(filter);
+          }
+        };
+        break;
+      }
+      case 1: {
+        this.filterBy = value;
+        this.dataSource.filterPredicate = function(
+          data: TeamMember,
+          filter: string
+        ): boolean {
+          if (data.Location) {
+            return data.Location.toLowerCase().includes(filter);
+          }
+        };
+        break;
+      }
+      case 2: {
+        this.filterBy = value;
+        this.dataSource.filterPredicate = function(
+          data: TeamMember,
+          filter: string
+        ): boolean {
+          if (data.BusinessUnit) {
+            return data.BusinessUnit.toLowerCase().includes(filter);
+          }
+        };
+        break;
+      }
+      case 3: {
+        this.filterBy = value;
+        this.dataSource.filterPredicate = function(
+          data: TeamMember,
+          filter: string
+        ): boolean {
+          if (data.CoachLastName) {
+            return data.CoachLastName.toLowerCase().includes(filter);
+          }
+        };
+        break;
+      }
+      default: {
+        this.filterBy = 0;
+        this.dataSource.filterPredicate = function(
+          data: TeamMember,
+          filter: string
+        ): boolean {
+          if (data.LastName) {
+            return data.LastName.toLowerCase().includes(filter);
+          }
+        };
+        break;
+      }
     }
   }
+
   exportToCSV() {
     this.exportData = this.setExportData(this.coachList);
-    const head = ['Last Name',
-    'First Name',
-    'Title',
-    'Position Category',
-    'Location',
-    'Business Unit',
-    'Coach Last Name',
-    'Coach First Name'];
+    const head = [
+      'Last Name',
+      'First Name',
+      'Title',
+      'Position Category',
+      'Location',
+      'Business Unit',
+      'Coach Last Name',
+      'Coach First Name',
+    ];
 
     // tslint:disable-next-line:no-unused-expression
-    new Angular2Csv(this.exportData, 'Coach List', {headers: (head)});
+    new Angular2Csv(this.exportData, 'Coach List', { headers: head });
   }
-
 
   private setExportData(teamMemberList: TeamMember[]) {
     const data = [];
@@ -103,5 +165,4 @@ export class TeamMemberListComponent implements AfterViewInit {
 
     return data;
   }
-
 }

@@ -11,7 +11,7 @@ import { MatTableModule,
   MatInputModule,
   MatIconModule,
   MatCardModule,
-  MatRadioModule,
+  MatSelectModule,
   MatToolbarModule,
   MatButtonModule} from '@angular/material';
 
@@ -35,7 +35,7 @@ import { TeamMemberListComponent } from './team-member-list/team-member-list.com
     MatInputModule,
     MatPaginatorModule,
     MatProgressSpinnerModule,
-    MatRadioModule,
+    MatSelectModule,
     MatTableModule,
     MatSortModule,
     MatToolbarModule
